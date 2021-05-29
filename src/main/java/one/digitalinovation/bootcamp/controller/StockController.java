@@ -15,17 +15,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import one.digitalinovation.bootcamp.model.dto.StockDTO;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/stock")
 public class StockController {
 
-//	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity<StockDTO> save(@RequestBody StockDTO dto){
-//		return ResponseEntity.ok(dto);
-//	}
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<StockDTO> save(@Valid @RequestBody StockDTO dto){
+		return ResponseEntity.ok(dto);
+	}
 
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<StockDTO> update(@RequestBody StockDTO dto) {
+	public ResponseEntity<StockDTO> update(@Valid @RequestBody StockDTO dto) {
 		return ResponseEntity.ok(dto);
 	}
 
