@@ -1,7 +1,9 @@
 package one.digitalinovation.bootcamp;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -14,9 +16,10 @@ public class RestApiProjectApplication {
 		SpringApplication.run(RestApiProjectApplication.class, args);
 	}
 	
-	public OpenAPI customOpenAPI() {
+	@Bean
+	public OpenAPI customOpenAPI(@Value("${application.description}")String description) {
 		return new OpenAPI().info(new Info()
-				.title("")
+				.title(description)
 				.version("1.0")
 				.termsOfService("")
 				.license(new License().name("Apache 2.0").url("http://springdoc.org")));

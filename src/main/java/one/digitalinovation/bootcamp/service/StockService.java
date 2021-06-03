@@ -1,5 +1,6 @@
 package one.digitalinovation.bootcamp.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,6 +65,18 @@ public class StockService {
 	@Transactional(readOnly = true)
 	public StockDTO findById(Long id) {
 		return stockRepository.findById(id).map(stockMapper::toDto).orElseThrow(NotFoundException::new);
+	}
+
+	@Transactional
+	public StockDTO delete(Long id) {
+		StockDTO stockDto = this.findById(id);		
+		stockRepository.deleteById(stockDto.getId());
+		return stockDto;
+	}
+
+	@Transactional(readOnly = true)
+	public List<StockDTO> findByToday() {
+		return stockRepository.findByToday(LocalDate.now()).map(stockMapper::toListDto).orElseThrow(NotFoundException::new);
 	}
 	
 	

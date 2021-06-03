@@ -1,6 +1,7 @@
 package one.digitalinovation.bootcamp.repository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -21,6 +22,9 @@ public interface StockRepository extends JpaRepository<Stock, Long>{
 
 	@Query("SELECT stock FROM Stock stock WHERE stock.name = :name AND stock.date = :date AND stock.id <> :id ")	
 	Optional<Stock> findByStockUpdate(String name, LocalDate date, Long id);
+
+	@Query("SELECT stock FROM Stock stock WHERE stock.date = :date")
+	Optional<List<Stock>> findByToday(LocalDate date);
 	
 	
 

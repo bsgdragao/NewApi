@@ -15,5 +15,9 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: none
+      
+      
+application:      
+  description: New Model Api Project
 
     
