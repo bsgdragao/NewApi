@@ -1,5 +1,8 @@
 package one.digitalinovation.bootcamp.mapper;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Component;
 
 import one.digitalinovation.bootcamp.model.Stock;
@@ -29,4 +32,8 @@ public class StockMapper {
 		return dto;
 	}
 
+	
+	public List<StockDTO> toListDto(List<Stock> listStock){
+		return listStock.stream().map(this::toDto).collect(Collectors.toList());
+	}
 }

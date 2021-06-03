@@ -1,13 +1,17 @@
 package one.digitalinovation.bootcamp.service;
 
+import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import one.digitalinovation.bootcamp.exceptions.BusinessException;
+import one.digitalinovation.bootcamp.exceptions.NotFoundException;
 import one.digitalinovation.bootcamp.mapper.StockMapper;
 import one.digitalinovation.bootcamp.model.Stock;
 import one.digitalinovation.bootcamp.model.dto.StockDTO;
@@ -36,5 +40,32 @@ public class StockService {
 		stockRepository.save(stock);
 		return stockMapper.toDto(stock);
 	}
+	
+	@Transactional
+	public StockDTO update(StockDTO dto) {
+		
+		Optional<Stock> optionalStock = stockRepository.findByStockUpdate(dto.getName(), dto.getDate(), dto.getId());
+		
+		if(optionalStock.isPresent()) {
+			throw new BusinessException(MessageUtils.STOCK_ALREADY_EXISTS);
+			
+		}
+		
+		Stock stock = stockMapper.toEntity(dto);
+		stockRepository.save(stock);
+		return stockMapper.toDto(stock);
+	}
+
+	@Transactional(readOnly = true)
+	public List<StockDTO> findAll() {
+		return stockMapper.toListDto(stockRepository.findAll());
+	}
+
+	@Transactional(readOnly = true)
+	public StockDTO findById(Long id) {
+		return stockRepository.findById(id).map(stockMapper::toDto).orElseThrow(NotFoundException::new);
+	}
+	
+	
 
 }
