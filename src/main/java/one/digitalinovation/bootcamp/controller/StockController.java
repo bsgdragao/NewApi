@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,16 +15,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import one.digitalinovation.bootcamp.model.dto.StockDTO;
+import one.digitalinovation.bootcamp.service.StockService;
 
 import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/stock")
 public class StockController {
+	
+	@Autowired
+	private StockService stockService;
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<StockDTO> save(@Valid @RequestBody StockDTO dto){
-		return ResponseEntity.ok(dto);
+		return ResponseEntity.ok(stockService.save(dto));
 	}
 
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
